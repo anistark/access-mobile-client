@@ -16,8 +16,11 @@ import kotlinx.coroutines.launch
 import org.iota.access.BaseFragment
 import org.iota.access.R
 import org.iota.access.SettingsFragment
+import org.iota.access.api.APILibDacAuthNative
 import org.iota.access.databinding.FragmentLoginBinding
 import org.iota.access.di.Injectable
+import org.iota.access.extensions.toBase64
+import org.iota.access.models.UserUtils
 import org.iota.access.user.UserManager
 import org.iota.access.utils.EncryptHelper
 import timber.log.Timber
@@ -31,6 +34,9 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var authNative: APILibDacAuthNative
 
     private lateinit var viewModel: LoginViewModel
     private lateinit var binding: FragmentLoginBinding
@@ -102,8 +108,21 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), Injectable {
 
     private fun onConnectButtonClick() {
 //        CoroutineScope(IO).launch {
+//            val privateKey = UserUtils.getDefaultUser("johnsmith")!!.privateKey
 //
-//        EncryptHelper.test()
+////            val privateKey = ByteArray(64)
+////            val publicKey = ByteArray(32)
+////            authNative.generateKeyPair(publicKey, privateKey)
+//
+//            val message = "helloworld"
+////            val signature = ByteArray(64)
+//            val signature = authNative.cryptoSign(message.toByteArray(Charsets.UTF_8), privateKey)
+//            val signatureBase64 = signature.toBase64()
+//
+////            val privateKeyBase64 = privateKey.toBase64();
+////            val publicKeyBase64 = publicKey.toBase64();
+//
+//            Timber.d("Signature: $signatureBase64")
 //        }
         viewModel.logIn()
     }
