@@ -22,6 +22,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
@@ -87,6 +88,12 @@ class CommandListFragment : CommunicationFragment<CommandListViewModel>(), Comma
         super.onActivityCreated(savedInstanceState)
         binding.recyclerView.adapter = CommandActionAdapter(commands, this)
         binding.swipeRefreshLayout.setOnRefreshListener { viewModel.policyList }
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                this@CommandListFragment.activity?.finish()
+            }
+        })
     }
 
     override fun showSnackbar(message: String) {

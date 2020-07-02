@@ -42,7 +42,6 @@ import org.iota.access.user.UserManager
 import org.iota.access.utils.Constants
 import org.iota.access.utils.Optional
 import org.iota.access.utils.ResourceProvider
-import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -141,24 +140,26 @@ class DelegationViewModel @Inject constructor(
             return
         }
 
-        val privateKey = user.privateKey
-
         mShowLoading.onNext(Pair(true, resourceProvider.getString(R.string.msg_delegating)))
 
         requests = ArrayList()
+
+        val ownerId = user.publicId
+        val privateKey = user.privateKey
+
+        // Create get actions policy
+        val getActionsAction = DelegationAction("Get Actions", "get_actions")
+        val getActionsPolicy = createPolicy(false, getActionsAction, null, null)
+        val getActionsRequest = createDelegatePolicyRequest(getActionsPolicy, ownerId, privateKey)
+
+        requests?.add(psService
+                .delegatePolicy(getActionsRequest)
+                .subscribeOn(Schedulers.io()))
+
         for (action in delegationActionList) {
-            val policy = createPolicy(false, action, gocRule, docRule) ?: continue
-            val json = JSONObject(policy.toMap()).toString()
+            val policy = createPolicy(false, action, gocRule, docRule)
 
-            val signature = authNative
-                    .cryptoSign(json.toByteArray(Charsets.UTF_8), privateKey)
-                    .toBase64()
-
-            val request = PSDelegatePolicyRequest(
-                    user.publicId,
-                    deviceId,
-                    policy.toMap(),
-                    signature)
+            val request = createDelegatePolicyRequest(policy, ownerId, privateKey)
 
             requests?.add(psService
                     .delegatePolicy(request)
@@ -201,12 +202,21 @@ class DelegationViewModel @Inject constructor(
                 })
     }
 
+    /**
+     * Creates policy.
+     *
+     * @param obfuscate If `true`, policyId and publicId will be obfuscated.
+     * If `false`, policyId and publicId will not be obfuscated.
+     * @param action Action to be delegated.
+     * @param gocRule Rule for policy GoC.
+     * @param docRule Rule for policy DoC.
+     */
     fun createPolicy(
             obfuscate: Boolean,
             action: DelegationAction? = null,
             gocRule: Rule? = null,
             docRule: Rule? = null
-    ): Policy? {
+    ): Policy {
         val gocAttrList: MutableList<PolicyAttributeList> = mutableListOf()
 
         // Add GoC rule to GoC
@@ -254,6 +264,29 @@ class DelegationViewModel @Inject constructor(
 
         val cost = COST_VALUES[mSelectedCostIndex]
         return Policy("sha-256", policyObject, cost.toString(), if (obfuscate) "**********" else null)
+    }
+
+    /**
+     * Created [PSDelegatePolicyRequest] object to be send as a request to policy store server.
+     *
+     * @param policy Policy.
+     * @param ownerId ID of policy owner.
+     * @param privateKey Key to be used for signing policy.
+     */
+    private fun createDelegatePolicyRequest(
+            policy: Policy,
+            ownerId: String,
+            privateKey: ByteArray
+    ): PSDelegatePolicyRequest {
+        val message = policy.policyId //JSONObject(policy.toMap()).toString()
+
+        val messageByteArray = message.toByteArray(Charsets.UTF_8)
+
+        val signature = authNative
+                .cryptoSign(messageByteArray, privateKey)
+                .toBase64()
+
+        return PSDelegatePolicyRequest(ownerId, deviceId, policy.toMap(), signature)
     }
 
     /**

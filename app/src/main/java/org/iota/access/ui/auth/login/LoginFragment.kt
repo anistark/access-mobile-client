@@ -99,12 +99,13 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), Injectable {
 
     private fun unbindViewModel() = disposable?.dispose()
 
-    private fun onLoginComplete() =
-            navController.navigate(LoginFragmentDirections.actionLoginFragmentToActivityMain())
-
-    private fun onCreateAccountButtonClick() {
-        navController.navigate(R.id.action_loginFragment_to_registerFragment)
+    private fun onLoginComplete() {
+        navController.navigate(LoginFragmentDirections.actionLoginFragmentToActivityMain())
+        activity?.finish()
     }
+
+    private fun onCreateAccountButtonClick() =
+            navController.navigate(R.id.action_loginFragment_to_registerFragment)
 
     private fun onConnectButtonClick() {
 //        CoroutineScope(IO).launch {

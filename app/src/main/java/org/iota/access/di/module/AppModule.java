@@ -87,8 +87,8 @@ public class AppModule {
     @Provides
     @Singleton
     public Communicator providesCommunicator(TCPClient tcpClient, TSService tsService, PSService psService) {
-//        return new CommunicatorImpl(tcpClient);
-        return new CommunicatorStub(tsService, psService);
+        return new CommunicatorImpl(tcpClient);
+//        return new CommunicatorStub(tsService, psService);
     }
 
     @Singleton
