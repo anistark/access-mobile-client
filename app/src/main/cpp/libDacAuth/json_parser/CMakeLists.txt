@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.10.2)
 
 set(target json_parser)
 

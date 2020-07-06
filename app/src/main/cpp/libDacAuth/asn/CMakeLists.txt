@@ -26,9 +26,9 @@ set(asn_implementation libCrypto CACHE STRING "ASN implementation choice")
 set(libs json_parser cryptography)
 
 # Depends on system libcrypto for libCrypto (ssl) variant
-#if (asn_implementation STREQUAL libCrypto)
-#    set(libs ${libs} -lcrypto)
-#endif ()
+if (asn_implementation STREQUAL libCrypto)
+    set(libs ${libs} -lcrypto)
+endif ()
 
 set(sources
         asn_auth.c

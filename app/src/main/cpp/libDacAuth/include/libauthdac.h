@@ -45,6 +45,8 @@
 
 #include "apiorig.h"
 
+#include "asn_auth.h"
+
 //#include "lwip/arch.h"
 
 //////////////////////////////////////////
@@ -109,6 +111,24 @@ int cryptoSign(
         unsigned long long message_len,
         const unsigned char *secret_key
 );
+
+//
+//
+//int asnauth_init_client(asn_ctx_t *, void *);
+//int asnauth_init_server(asn_ctx_t *, void *);
+//
+//int asnauth_set_option(asn_ctx_t *, const char *, unsigned char *);
+//
+//int asnauth_authenticate(asn_ctx_t *);
+//
+//int asnauth_send(asn_ctx_t *, const unsigned char *, unsigned short);
+//
+//int asnauth_receive(asn_ctx_t *, unsigned char **, unsigned short *);
+//
+int asnauthRelease(asn_ctx_t *);
+//
+
+
 
 #ifdef __cplusplus
 };

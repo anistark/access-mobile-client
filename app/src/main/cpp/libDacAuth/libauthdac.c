@@ -36,6 +36,7 @@
 #include "dacdbg.h"
 #include "libauthdac.h"
 #include "libdac_internal.h"
+#include "asn_auth.h"
 
 static dacStruct_t internal;
 
@@ -171,6 +172,11 @@ static dacStruct_t internal;
     //debug("dacRelease END");
 
     return ret;
+}
+
+int asnauthRelease(asn_ctx_t *session) {
+//    return asnauth_release(session);
+    return 0;
 }
 
 int cryptoSignKeypair(unsigned char *pub_key, unsigned char *prv_key) {

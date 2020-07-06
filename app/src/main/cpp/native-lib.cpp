@@ -23,6 +23,7 @@
 #include <libauthdac.h>
 #include <cstring>
 #include <malloc.h>
+#include "asn_auth.h"
 
 
 // Android log function wrappers
@@ -237,59 +238,26 @@ Java_org_iota_access_api_APILibDacAuthNative_dacReceive(JNIEnv *env, jobject ins
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_org_iota_access_api_APILibDacAuthNative_dacRelease(JNIEnv *env, jobject instance,
-                                                        jlongArray session_) {
-    if (session_ == nullptr) {
+Java_org_iota_access_api_APILibDacAuthNative_dacRelease(
+        JNIEnv *env,
+        jobject instance,
+        jlongArray session_
+) {
+    if (session_ == nullptr)
         return 0;
-    }
+
     jlong *session = env->GetLongArrayElements(session_, nullptr);
-    dacSession_t *dacSession = (dacSession_t *) *session;
+    auto *asnSession = (asn_ctx_t *) *session;
     jint ret = 0;
 
     // TODO: release object references
-    ret = dacRelease(dacSession);
+    ret = asnauthRelease(asnSession);
 
     LOGI("APILibDacAuthNative_dacRelease");
 
     env->ReleaseLongArrayElements(session_, session, 0);
     return ret;
 }
-//
-//extern "C"
-//JNIEXPORT jint JNICALL
-//Java_org_iota_access_api_APILibDacAuthNative_cryptoSign(
-//        JNIEnv *env,
-//        jobject thiz,
-//        jbyteArray signature,
-//        jbyteArray message,
-//        jbyteArray private_key
-//) {
-//    int ret = 0;
-//    jbyte *message_jbyte = env->GetByteArrayElements(message, nullptr);
-//    jbyte *prv_key = env->GetByteArrayElements(private_key, nullptr);
-//
-//    size_t message_len = strlen((char *) message_jbyte);
-//
-//    unsigned long long signed_message_len = 0;
-//
-//    char *signed_message = (char *) malloc((message_len + SIGNATURE_LEN) * sizeof(char));
-//
-//    jbyte signature_[SIGNATURE_LEN] = {0};
-//
-//    ret = cryptoSign(
-//            (unsigned char *) signed_message,
-//            &signed_message_len,
-//            (unsigned char *) message_jbyte,
-//            (unsigned long long) message_len, (unsigned char *) prv_key);
-//
-//    memcpy(signature_, signed_message, SIGNATURE_LEN);
-//
-//    env->ReleaseByteArrayElements(signature, signature_, 0);
-//
-//    free(signed_message);
-//
-//    return ret;
-//}
 
 extern "C"
 JNIEXPORT jbyteArray JNICALL

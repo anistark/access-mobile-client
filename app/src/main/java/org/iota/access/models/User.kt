@@ -19,14 +19,11 @@
 package org.iota.access.models
 
 import android.util.Base64
-import net.i2p.crypto.eddsa.EdDSAPrivateKey
-import org.iota.access.utils.EdDSAPrivateKeyUtils
 import org.json.JSONObject
 import java.io.Serializable
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 class User(
-        /** Public ID must be 64 characters long. */
         val publicId: String,
         val username: String,
         val firstName: String,

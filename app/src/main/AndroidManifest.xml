@@ -19,9 +19,11 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="org.iota.access.ui.splash.SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/IOTA.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

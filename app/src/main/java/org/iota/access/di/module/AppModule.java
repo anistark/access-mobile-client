@@ -22,11 +22,14 @@ package org.iota.access.di.module;
 import android.app.Application;
 import android.content.Context;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.iota.access.BuildConfig;
 import org.iota.access.api.APILibDacAuthNative;
 import org.iota.access.api.Communicator;
 import org.iota.access.api.CommunicatorImpl;
-import org.iota.access.api.CommunicatorStub;
 import org.iota.access.api.OnMessageReceived;
 import org.iota.access.api.PSService;
 import org.iota.access.api.TSService;
@@ -38,9 +41,6 @@ import org.iota.access.data.DataProvider;
 import org.iota.access.data.DataProviderImpl;
 import org.iota.access.di.AppSharedPreferences;
 import org.iota.access.utils.ResourceProvider;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.security.KeyManagementException;
 import java.security.KeyStore;

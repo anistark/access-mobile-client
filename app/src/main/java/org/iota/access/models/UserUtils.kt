@@ -26,7 +26,7 @@ object UserUtils {
             val userList: MutableList<User> = ArrayList()
 
             userList.add(User(
-                    publicId = "3c9d985c5d630e6e02f676997c5e9f03b45c6b7529b2491e8de03c18af3c9d87",
+                    publicId = "3c9d985c5d630e6e02f676997c5e9f03b45c6b7529b2491e8de03c18af3c9d87f0a65ecb5dd8f390dee13835354b222df414104684ce9f1079a059f052ca6e51",
                     username = "johnsmith",
                     firstName = "John",
                     lastName = "Smith",

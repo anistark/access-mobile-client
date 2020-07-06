@@ -10,6 +10,15 @@ cmake_minimum_required(VERSION 3.10.2)
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
+add_library(crypto STATIC IMPORTED)
+
+set_target_properties(crypto
+        PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/libs/${ANDROID_ABI}/libcrypto.a)
+
+add_subdirectory(src/main/cpp/libDacAuth/asn)
+add_subdirectory(src/main/cpp/libDacAuth/crypto)
+add_subdirectory(src/main/cpp/libDacAuth/json_parser)
+
 add_library( # Sets the name of the library.
         native-lib
 
@@ -17,8 +26,7 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        src/main/cpp/native-lib.cpp
-        )
+        src/main/cpp/native-lib.cpp)
 
 add_library( # Sets the name of the library.
         dacAuthNative
@@ -49,12 +57,10 @@ include_directories(
         src/main/cpp/libDacAuth/include
         src/main/cpp/libDacAuth/tinyembedded/include
         src/main/cpp/libDacAuth/tinyembedded/external
-        src/main/cpp/libDacAuth/tinyembedded/external/ref)
-
-#add_subdirectory(
-#        src/main/cpp/libDacAuth/asn
-#        src/main/cpp/libDacAuth/crypto
-#        src/main/cpp/libDacAuth/json_parser)
+        src/main/cpp/libDacAuth/tinyembedded/external/ref
+        src/main/cpp/libDacAuth/asn
+        src/main/cpp/libDacAuth/crypto
+        src/main/cpp/libDacAuth/json_parser)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -64,6 +70,8 @@ include_directories(
 
 find_library( # Sets the name of the path variable.
         log-lib
+
+        crypto
 
         # Specifies the name of the NDK library that
         # you want CMake to locate.
@@ -77,6 +85,12 @@ target_link_libraries( # Specifies the target library.
         native-lib
 
         dacAuthNative
+
+        crypto
+
+#        json_parser
+#
+#        asn
 
         # Links the target library to the log library
         # included in the NDK.
