@@ -1,7 +1,6 @@
 #include <string.h>
 #include "crypto_hash_sha512.h"
 #include "crypto_verify_32.h"
-#include "dlog.h"
 #include "ge25519.h"
 
 /* Packed coordinates of the base point */
@@ -25,15 +24,15 @@ int crypto_sign_open(unsigned char *m, unsigned long long *mlen, const unsigned 
   ge25519 get1, get2;
   sc25519 schram, scs;
 
-  if (smlen < 64) {
-    dlog_printf("\nerror 1");
-  } else if (sm[63] & 224) {
-    dlog_printf("\nerror 2");
-  } else if (ge25519_unpackneg_vartime(&get1, pk)) {
-    dlog_printf("\nerror 3");
-  } else {
-    dlog_printf("\nNo error");
-  }
+//  if (smlen < 64) {
+//    dlog_printf("\nerror 1");
+//  } else if (sm[63] & 224) {
+//    dlog_printf("\nerror 2");
+//  } else if (ge25519_unpackneg_vartime(&get1, pk)) {
+//    dlog_printf("\nerror 3");
+//  } else {
+//    dlog_printf("\nNo error");
+//  }
 
   if (smlen < 64) goto badsig;
   if (sm[63] & 224) goto badsig;

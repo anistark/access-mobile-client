@@ -30,6 +30,7 @@ import org.iota.access.BuildConfig;
 import org.iota.access.api.APILibDacAuthNative;
 import org.iota.access.api.Communicator;
 import org.iota.access.api.CommunicatorImpl;
+import org.iota.access.api.CommunicatorStub;
 import org.iota.access.api.OnMessageReceived;
 import org.iota.access.api.PSService;
 import org.iota.access.api.TSService;

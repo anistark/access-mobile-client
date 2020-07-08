@@ -72,7 +72,7 @@ class CommandListFragment : CommunicationFragment<CommandListViewModel>(), Comma
 
     override fun onStart() {
         super.onStart()
-        if (!viewModel.isPolicyRequested) viewModel.policyList else if (!viewModel.commandList.isEmpty) {
+        if (!viewModel.isPolicyRequested) viewModel.getPolicyList() else if (!viewModel.commandList.isEmpty) {
             binding.fab.show()
         }
     }
@@ -87,7 +87,7 @@ class CommandListFragment : CommunicationFragment<CommandListViewModel>(), Comma
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.recyclerView.adapter = CommandActionAdapter(commands, this)
-        binding.swipeRefreshLayout.setOnRefreshListener { viewModel.policyList }
+        binding.swipeRefreshLayout.setOnRefreshListener { viewModel.getPolicyList() }
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object: OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

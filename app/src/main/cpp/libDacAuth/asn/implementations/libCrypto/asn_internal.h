@@ -34,13 +34,13 @@
 #ifndef ASN_INTERNAL_H_
 #define ASN_INTERNAL_H_
 
-#include <openssl/aes.h>
-#include <openssl/bn.h>
-#include <openssl/dh.h>
-#include <openssl/hmac.h>
-#include <openssl/modes.h>
-#include <openssl/rsa.h>
-#include <openssl/sha.h>
+#include "openssl/aes.h"
+#include "openssl/bn.h"
+#include "openssl/dh.h"
+#include "openssl/hmac.h"
+#include "openssl/modes.h"
+#include "openssl/rsa.h"
+#include "openssl/sha.h"
 
 #include "asn_auth.h"
 

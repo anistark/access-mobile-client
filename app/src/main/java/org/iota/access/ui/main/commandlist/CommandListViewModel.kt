@@ -95,14 +95,13 @@ class CommandListViewModel @Inject constructor(
         sendTCPMessage(CommunicationMessage.makeResolvePolicyRequest(policy), resourceProvider.getString(R.string.msg_executing_command, command.actionName))
     }
 
-    val policyList: Unit
-        get() {
-            if (userManager.user == null) return
-            isPolicyRequested = true
-            _showRefresh.onNext(true)
-            val userId = userManager.user!!.publicId
-            sendTCPMessage(CommunicationMessage.makePolicyListRequest(userId))
-        }
+    fun getPolicyList() {
+        val user = userManager.user ?: return
+        isPolicyRequested = true
+        _showRefresh.onNext(true)
+        val userId = user.publicId
+        sendTCPMessage(CommunicationMessage.makePolicyListRequest(userId))
+    }
 
     fun enablePolicy(policyId: String?) {
         policyIdToEnable = policyId

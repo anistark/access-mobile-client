@@ -31,7 +31,6 @@
 #include "json_helper.h"
 #include <string.h>
 #include <strings.h>
-#include "dlog.h"
 
 #define JSMN_HEADER
 #include "jsmn.h"
